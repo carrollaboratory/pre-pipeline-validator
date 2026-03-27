@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+write_to = "src/deva/_version.py"
+
+[project]
+name = "deva"
+authors = [
+    {name = "Brenda Gutman", email="brenda.gutman@vumc.org"}
+]
+description = "Data Expectations Validation Assistant"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = ["cerberus"]
+
+dynamic = ["version"]
+
+[tool.setuptools.packages.find]
+where = ["src"]  # list of folders that contain the packages (["."] by default)
+
+[tool.setuptools.package-data]
+deva = []
+
+[project.scripts]
+validate_dd = "deva.models.dd_run_cerberus_validation:main"
+validate_df = "deva.models.df_run_cerberus_validation:main"
+
