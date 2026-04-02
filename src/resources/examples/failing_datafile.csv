@@ -1,0 +1,6 @@
+MASKED_ID,AGE,BMI,HEIGHT,WEIGHT,Acute bronchitis,Acute kidney failure,Xerosis cutis
+1111,11.1,24.1,64,180,1,,
+2222,22.0,24,64.0,180,,1,1
+3333,33,24,64,180,1,,
+4444,44,24,64,180,,1,
+5555,55,24,64,180,,1

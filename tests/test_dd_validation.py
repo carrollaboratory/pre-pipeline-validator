@@ -1,8 +1,8 @@
-from src.validator.models.cerberus_validation.dd_validation import (
+from src.deva.models.cerberus_validation.cerb_dd_validation import (
     DataDictionaryValidator,
 )
-from src.validator.models.cerberus_validation import run_cerberus_validation
-from src.validator.resources.schemas.data_dictionary import schema
+from src.deva.models.cerberus_validation import run_cerberus_validation
+from src.deva.schemas.example_data_dictionary import schema
 
 
 def test_numeric_constraints_pass_for_integer():

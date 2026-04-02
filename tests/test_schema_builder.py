@@ -1,5 +1,5 @@
 import pytest
-from src.validator.models.cerberus_validation.schema_builder import csv_to_cerberus_schema
+from src.deva.models.cerberus_validation.schema_builder import csv_to_cerberus_schema
 
 
 @pytest.fixture

@@ -1,0 +1,5 @@
+STATUS,FILE,TABLE,FIELD,CHECK,CATEGORY,SUBCATEGORY,LEVEL,NOTES,DESCRIPTION,% RECORDS
+Fail,failing_datafile,failing_dd,AGE,allowed,Conformity,Value,FIELD,,"Selection of unallowed values: 11.1, 22.0, 33, 44, 55, ...",100.00%
+Fail,failing_datafile,failing_dd,BMI,column_defined,Conformity,Undefined Column,TABLE,,Column BMI is present in the data file but not defined in the data dictionary.,20.00%
+Fail,failing_datafile,failing_dd,HEIGHT,column_defined,Conformity,Undefined Column,TABLE,,Column HEIGHT is present in the data file but not defined in the data dictionary.,20.00%
+Fail,failing_datafile,failing_dd,WEIGHT,column_defined,Conformity,Undefined Column,TABLE,,Column WEIGHT is present in the data file but not defined in the data dictionary.,20.00%

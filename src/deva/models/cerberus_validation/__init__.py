@@ -1,24 +1,41 @@
 import csv
 from cerberus import Validator, DocumentError
-from typing import Generator
+
+from deva import s3_reader
 
 
-def csv_to_dicts_chunked(filepath, chunk_size=1000) -> Generator:
+def csv_to_dicts_chunked(
+    filepath,
+    chunksize=1000,
+    aws_access_key_id=None,
+    aws_secret_access_key=None,
+    aws_session_token=None,
+):
     """
     Reads a CSV file in chunks and yields lists of row dicts.
     Empty strings are normalized to None.
-
     """
-    with open(filepath, newline="") as f:
-        reader = csv.DictReader(f)
-        chunk = []
-        for row in reader:
-            chunk.append({k: (v if v != "" else None) for k, v in row.items()})
-            if len(chunk) == chunk_size:
+
+    if filepath.startswith("s3://"):
+        f = s3_reader(
+            filepath, aws_access_key_id, aws_secret_access_key, aws_session_token
+        )
+    else:
+        f = open(filepath, newline="")
+
+    try:
+        with f:
+            reader = csv.DictReader(f)
+            chunk = []
+            for row in reader:
+                chunk.append({k: (v if v != "" else None) for k, v in row.items()})
+                if len(chunk) == chunksize:
+                    yield chunk
+                    chunk = []
+            if chunk:
                 yield chunk
-                chunk = []
-        if chunk:
-            yield chunk
+    except csv.Error as e:
+        raise ValueError(f"CSV parsing error on line {reader.line_num}: {e}") from e
 
 
 # Maps Cerberus rule names to output subcategories.
@@ -37,12 +54,14 @@ RULE_SUBCATEGORY_MAP = {
 }
 
 
-def run_cerberus_validation(schema, src_file, validator_class=Validator):
+def run_cerberus_validation(
+    schema, src_file, validator_class=Validator, allow_unknown=False
+):
     """
     Runs validation using a specified Cerberus Validator class.
     Returns the validator object so callers can access errors and document_error_tree.
     """
-    v = validator_class(schema, allow_unknown=True)
+    v = validator_class(schema, allow_unknown=allow_unknown)
     try:
         v.validate(src_file)
     except DocumentError:

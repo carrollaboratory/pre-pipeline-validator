@@ -1,0 +1,9 @@
+variable_name,description,data_type,min,max,units,enumerations,comment
+MASKED_ID,Masked ID,integer,,,,,
+AGE,Age at last encounter,integer,18,90,years,,
+HEIGHT,Height in inches,integer,36,96,inches,,
+WEIGHT,Weight in pounds,integer,80,400,pounds,,
+BMI,Body Mass Index,float,10,50,kg/m^2,,
+Acute_bronchitis,,string,,,,1;0,"1 indicates presence of condition, 0 indicates absence of condition"
+Acute_kidney_failure,,string,,,,1;0,"1 indicates presence of condition, 0 indicates absence of condition"
+Xerosis_cutis,Xerosis cutis ,string,,,,1;0,"1 indicates presence of condition, 0 indicates absence of condition"

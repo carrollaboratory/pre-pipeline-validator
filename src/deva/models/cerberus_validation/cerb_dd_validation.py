@@ -9,28 +9,31 @@ class DataDictionaryValidator(Validator):
     def _check_with_numeric_constraints(self, field, value):
         """
         Checks that 'min' and 'max' are only present for numeric data types.
-        This rule is applied to a specific field, but we can access the whole document.
         """
-        document = self.document
-        dt = document.get("data_type")
+        if value is None:
+            return
+
+        dt = self.document.get("data_type")
 
         if dt not in {"integer", "float"}:
-            if value is not None:
-                self._error(field, "min/max is only allowed for numeric data types (integer, float).")
+            self._error(
+                field,
+                "min/max is only allowed for numeric data types (integer, float).",
+            )
 
-
-def prepare_and_run_data_dictionary_validation(data_dictionary_path, tgt_schema, output_csv_path):
+def prepare_and_run_data_dictionary_validation(data_dictionary_path, tgt_schema, output_csv_path, chunksize=1000, aws_access_key_id=None, aws_secret_access_key=None, aws_session_token=None):
     # Load and format the source data.
-    formatted_source_data = csv_to_dicts_chunked(data_dictionary_path)
+    formatted_source_data = csv_to_dicts_chunked(data_dictionary_path, chunksize=chunksize, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
 
     # Import the specified schema module and retrieve the schema.
-    schema_module = __import__(
-        f"src.deva.resources.schemas.{tgt_schema}", fromlist=["schema"]
-    )
-    schema = getattr(schema_module, "schema")
+    try:
+        schema_module = __import__(f"deva.schemas.{tgt_schema}", fromlist=["schema"])
+        schema = getattr(schema_module, "schema")
+    except (ImportError, AttributeError):
+        raise ValueError(f"Schema '{tgt_schema}' not found or is invalid.")
 
     validator_class = (
-        DataDictionaryValidator if tgt_schema == "data_dictionary" else Validator
+        DataDictionaryValidator if "data_dictionary" in tgt_schema else Validator
     )
 
     validation_results = []

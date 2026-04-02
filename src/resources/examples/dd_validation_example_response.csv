@@ -1,0 +1,3 @@
+STATUS,FILE,TABLE,FIELD,CHECK,CATEGORY,SUBCATEGORY,LEVEL,NOTES,DESCRIPTION,% RECORDS
+Fail,passing_dd,example_data_dictionary,max,,Conformity,Value,FIELD,,"Value '90' in row 3 min/max is only allowed for numeric data types (integer, float).",
+Fail,passing_dd,example_data_dictionary,min,,Conformity,Value,FIELD,,"Value '18' in row 3 min/max is only allowed for numeric data types (integer, float).",
