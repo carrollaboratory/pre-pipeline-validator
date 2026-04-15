@@ -1,6 +1,6 @@
-# validator
+# pre-pipeline-validator
 
-**Data Expectations Validation Assistant (deva)** — a command-line tool for validating data dictionaries and data files using schema-based rules. Validation results are written to a CSV report detailing every failure with its status, category, level, and description.
+**pre-pipeline-validator(PPV)** — a command-line tool for validating data dictionaries and data files using schema-based rules. Validation results are written to a CSV report detailing every failure with its status, category, level, and description.
 
 ---
 
