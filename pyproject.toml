@@ -3,10 +3,10 @@ requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
-write_to = "src/deva/_version.py"
+write_to = "src/pre_pipeline_validator/_version.py"
 
 [project]
-name = "deva"
+name = "pre_pipeline_validator"
 authors = [
     {name = "Brenda Gutman", email="brenda.gutman@vumc.org"}
 ]
@@ -26,9 +26,9 @@ dynamic = ["version"]
 where = ["src"]  # list of folders that contain the packages (["."] by default)
 
 [tool.setuptools.package-data]
-deva = []
+pre_pipeline_validator = []
 
 [project.scripts]
-validate_dd = "deva.models.dd_run_cerberus_validation:main"
-validate_df = "deva.models.df_run_cerberus_validation:main"
+validate_dd = "pre_pipeline_validator.models.dd_run_cerberus_validation:main"
+validate_df = "pre_pipeline_validator.models.df_run_cerberus_validation:main"
 

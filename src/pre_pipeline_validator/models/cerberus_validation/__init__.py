@@ -1,7 +1,7 @@
 import csv
 from cerberus import Validator, DocumentError
 
-from deva import s3_reader
+from pre_pipeline_validator import s3_reader
 
 
 def csv_to_dicts_chunked(

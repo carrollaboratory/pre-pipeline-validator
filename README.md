@@ -51,7 +51,7 @@ validate_dd <tgt_schema> <data_dictionary_path> <output_csv_path> [options]
 
 | Argument | Required | Description |
 |---|---|---|
-| `tgt_schema` | Yes | Name of the schema to validate against (e.g. `example_data_dictionary`). Schema files are located in `src/deva/schemas/`. |
+| `tgt_schema` | Yes | Name of the schema to validate against (e.g. `example_data_dictionary`). Schema files are located in `src/pre_pipeline_validator/schemas/`. |
 | `data_dictionary_path` | Yes | Path to the data dictionary CSV file to validate. Can be a local path or an S3 URI (`s3://...`). |
 | `output_csv_path` | Yes | Path to write the validation results CSV. The file will be created or overwritten. |
 | `--aws-access-key-id` | No | AWS access key ID, required when reading/writing S3 paths. |

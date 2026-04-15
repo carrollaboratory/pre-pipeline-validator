@@ -1,6 +1,6 @@
 import argparse
 
-from deva.models.cerberus_validation.cerb_dd_validation import (
+from pre_pipeline_validator.models.cerberus_validation.cerb_dd_validation import (
     prepare_and_run_data_dictionary_validation,
 )
 

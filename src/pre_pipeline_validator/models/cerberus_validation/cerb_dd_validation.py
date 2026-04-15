@@ -1,8 +1,8 @@
 from cerberus import Validator
 from pathlib import Path
 
-from src.deva.models.cerberus_validation import csv_to_dicts_chunked, run_cerberus_validation, RULE_SUBCATEGORY_MAP
-from src.deva.models.validation_result import ValidationResult, write_validation_results_to_csv
+from src.pre_pipeline_validator.models.cerberus_validation import csv_to_dicts_chunked, run_cerberus_validation, RULE_SUBCATEGORY_MAP
+from src.pre_pipeline_validator.models.validation_result import ValidationResult, write_validation_results_to_csv
 
 
 class DataDictionaryValidator(Validator):
@@ -27,7 +27,7 @@ def prepare_and_run_data_dictionary_validation(data_dictionary_path, tgt_schema,
 
     # Import the specified schema module and retrieve the schema.
     try:
-        schema_module = __import__(f"deva.schemas.{tgt_schema}", fromlist=["schema"])
+        schema_module = __import__(f"pre_pipeline_validator.schemas.{tgt_schema}", fromlist=["schema"])
         schema = getattr(schema_module, "schema")
     except (ImportError, AttributeError):
         raise ValueError(f"Schema '{tgt_schema}' not found or is invalid.")

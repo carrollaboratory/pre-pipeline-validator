@@ -1,5 +1,7 @@
 import pytest
-from src.deva.models.cerberus_validation.schema_builder import csv_to_cerberus_schema
+from src.pre_pipeline_validator.models.cerberus_validation.schema_builder import (
+    csv_to_cerberus_schema,
+)
 
 
 @pytest.fixture
@@ -41,4 +43,3 @@ def test_row_without_variable_name_is_skipped():
     rows = [{"variable_name": None, "data_type": "string"}]
     schema = csv_to_cerberus_schema(rows)
     assert schema == {}
-

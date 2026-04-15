@@ -1,8 +1,13 @@
 from unittest.mock import mock_open, patch
 
-from src.deva.models.cerberus_validation import csv_to_dicts_chunked, run_cerberus_validation
-from src.deva.models.cerberus_validation.cerb_dd_validation import DataDictionaryValidator
-from src.deva.schemas.example_data_dictionary import schema
+from src.pre_pipeline_validator.models.cerberus_validation import (
+    csv_to_dicts_chunked,
+    run_cerberus_validation,
+)
+from src.pre_pipeline_validator.models.cerberus_validation.cerb_dd_validation import (
+    DataDictionaryValidator,
+)
+from src.pre_pipeline_validator.schemas.example_data_dictionary import schema
 
 
 CSV_CONTENT = "variable_name,description,data_type,min,max\nmasked_id,Masked ID,integer,,\nAGE,Age at last encounter,string,,\n"
