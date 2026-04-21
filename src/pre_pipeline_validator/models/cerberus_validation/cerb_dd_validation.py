@@ -4,12 +4,12 @@ from pathlib import Path
 from pre_pipeline_validator.models.cerberus_validation import (
     csv_to_dicts_chunked,
     run_cerberus_validation,
-    RULE_SUBCATEGORY_MAP,
 )
 from pre_pipeline_validator.models.validation_result import (
     ValidationResult,
     write_validation_results_to_csv,
 )
+from pre_pipeline_validator.models.check_registry import DEFAULT_REGISTRY
 
 
 class DataDictionaryValidator(Validator):
@@ -56,17 +56,17 @@ def prepare_and_run_data_dictionary_validation(data_dictionary_path, tgt_schema,
                         ve = field_ve_list[idx] if idx < len(field_ve_list) else None
                         rule = ve.rule if ve else "unknown"
                         constraint = ve.constraint if ve else None
-                        subcategory = RULE_SUBCATEGORY_MAP.get(rule, "Value")
+                        meta = DEFAULT_REGISTRY.get(rule)
                         constraint_info = f" (constraint: {constraint})" if constraint is not None else ""
                         result = ValidationResult(
-                            status="Fail",
+                            status=meta.status,
                             file=Path(data_dictionary_path).stem,
                             table=tgt_schema,
                             field=field,
-                            check=rule,
-                            category="Conformity",
-                            subcategory=subcategory,
-                            level="FIELD",
+                            check=meta.check,
+                            category=meta.category,
+                            subcategory=meta.subcategory,
+                            level=meta.level,
                             notes=None,
                             description=f"Value '{row.get(field)}' in row {row_num} {error}{constraint_info}",
                             percent_records=None,

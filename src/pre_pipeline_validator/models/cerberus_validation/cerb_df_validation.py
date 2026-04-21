@@ -11,6 +11,7 @@ from pre_pipeline_validator.models.validation_result import (
     ValidationResult,
     write_validation_results_to_csv,
 )
+from pre_pipeline_validator.models.check_registry import DEFAULT_REGISTRY
 from pre_pipeline_validator.models.cerberus_validation.schema_builder import (
     csv_to_cerberus_schema,
     build_field_type_map,
@@ -145,30 +146,24 @@ def prepare_and_run_datafile_validation(
     validation_results = []
     for entry in error_aggregator.values():
         pct = f"{len(entry['rows']) / total_rows:.2%}" if total_rows > 0 else "N/A"
-        
+
         rule = entry.get("rule", "unknown")
         if "missing" in entry["error"]:
-            subcategory = "Missing Column"
-            level = "TABLE"
-            check = "column_present"
+            meta = DEFAULT_REGISTRY.get("column_present")
         elif "not defined" in entry["error"]:
-            subcategory = "Undefined Column"
-            level = "TABLE"
-            check = "column_defined"
+            meta = DEFAULT_REGISTRY.get("column_defined")
         else:
-            subcategory = RULE_SUBCATEGORY_MAP.get(rule, "Value")
-            level = "FIELD"
-            check = rule
+            meta = DEFAULT_REGISTRY.get(rule)
 
         result = ValidationResult(
-            status="Fail",
+            status=meta.status,
             file=Path(datafile_path).stem,
             table=Path(data_dictionary_path).stem,
             field=entry["field"],
-            check=check,
-            category="Conformity",
-            subcategory=subcategory,
-            level=level,
+            check=meta.check,
+            category=meta.category,
+            subcategory=meta.subcategory,
+            level=meta.level,
             notes=None,
             description=(
                 "Selection of unallowed values: "

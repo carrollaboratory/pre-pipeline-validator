@@ -26,7 +26,7 @@ source .venv/bin/activate
 Install the package from GitHub:
 
 ```bash
-pip install git+https://github.com/brendagutman/validator.git
+pip install git+https://github.com/carrollaboratory/pre-pipeline-validator.git
 ```
 
 Or install locally from source:
